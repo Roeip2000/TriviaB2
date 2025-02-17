@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- כותרת ההוראות -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📖 הוראות המשחק"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:background="#6200EE"
+            android:padding="12dp"/>
+
+        <!-- איך משחקים -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔹 המשחק הוא טריוויה! בכל סיבוב תוצג לך שאלה עם 4 תשובות אפשריות.
+🔹 עליך לבחור את התשובה הנכונה מתוך ארבעת האפשרויות.
+🔹 ככל שתענה יותר נכון – תצבור יותר נקודות ותעלה שלבים!
+🔹 האם תוכל להגיע לציון הגבוה ביותר?"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:padding="20dp"
+            android:background="#E3F2FD"
+            android:layout_marginTop="10dp"/>
+
+        <!-- חוקי המשחק -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📜 חוקי המשחק"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#6200EE"
+            android:gravity="center"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🎯 בחר את התשובה הנכונה לכל שאלה."
+            android:textSize="18sp"
+            android:padding="10dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⭐ ככל שתענה נכון - תקבל יותר נקודות!"
+            android:textSize="18sp"
+            android:padding="10dp"/>
+
+        <!-- כפתור חזור -->
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⬅ חזור למשחק"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:background="#6200EE"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"/>
+    </LinearLayout>
+</ScrollView>

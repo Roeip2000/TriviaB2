@@ -1,6 +1,6 @@
 package com.example.triviab;
 
-
+// ייבוא ספריות של Android
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,72 +15,64 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class MainActivity extends AppCompatActivity {
 
+    // משמש להשקת אקטיביטיז עם קבלת תוצאה
     private ActivityResultLauncher<Intent> launcher;
-    private FbModule fbModule;
-    private String backgroundColor = "";
-    private ConstraintLayout ll;
+    private FbModule fbModule; // מודול לניהול פייסבוק (לשמירת צבעי רקע)
+    private String backgroundColor = ""; // צבע רקע נוכחי
+    private ConstraintLayout ll; // פריסת המסך הראשי
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); // קישור לקובץ ה-XML של הפעילות הראשית
 
-        fbModule = new FbModule(this);
-         ll=findViewById(R.id.main);// ניתוב לXML
+        fbModule = new FbModule(this); // אתחול המודול של Firebase
+        ll = findViewById(R.id.main); // קישור לפריסת המסך הראשי ב-XML
 
+        // אתחול ה-Launcher כדי לקבל תוצאה מפעילויות אחרות (לדוגמה: דף ההגדרות)
         launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult o) {
-
                         if (o.getResultCode() == RESULT_OK) {
                             Intent data = o.getData();
-                            String str = data.getStringExtra("color");
-                            fbModule.writeBackgroundColorToFb(str);
-                            //Toast.makeText(MainActivity.this, "" + str, Toast.LENGTH_SHORT).show();
+                            String str = data.getStringExtra("color"); // קבלת הצבע שנבחר בהגדרות
+                            fbModule.writeBackgroundColorToFb(str); // שמירת הצבע ב-Firebase
                         }
-
-
                     }
                 }
         );
-
     }
 
-
-
-    public void OnStartGame(View view) //פעולה להתחלת המשחק
-    {
-        Intent intent=new Intent(this, GameActivity.class);
-        startActivity(intent);//העברת דף
+    // פונקציה שמופעלת בעת לחיצה על כפתור "התחלת המשחק"
+    public void OnStartGame(View view) {
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("background_color", backgroundColor); // העברת הצבע לדף המשחק
+        startActivity(intent); // מעבר לדף המשחק
     }
 
+    // פונקציה שמופעלת בעת לחיצה על כפתור ההוראות (כרגע ריקה)
     public void OnInstruction(View view)
     {
-
+        Intent intent = new Intent(this, Instruction_Activity.class);
+        startActivity(intent);
     }
 
-
-
-    public void OnSetting(View view)
-    {
+    // פונקציה שמופעלת בעת לחיצה על כפתור ההגדרות
+    public void OnSetting(View view) {
         Intent i = new Intent(this, SettingActivity.class);
-        launcher.launch(i);
-
+        launcher.launch(i); // הפעלת דף ההגדרות עם אפשרות להחזיר תוצאה
     }
 
-    public void setNewColorFromFb(String str)
-    {
-
-        this.backgroundColor=str;
-           SetBeackgroundColor(str);
+    // פונקציה שמקבלת צבע חדש מה-Firebase ומעדכנת את המשתנה
+    public void setNewColorFromFb(String str) {
+        this.backgroundColor = str;
+        SetBeackgroundColor(str); // עדכון צבע הרקע
     }
 
-    private void SetBeackgroundColor(String color)
-    {
-
-
+    // פונקציה שמעדכנת את צבע הרקע של המסך לפי המחרוזת שהתקבלה
+    private void SetBeackgroundColor(String color) {
         switch (color) {
             case "Red":
                 ll.setBackgroundColor(Color.RED);
@@ -89,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 ll.setBackgroundColor(Color.BLUE);
                 break;
             case "Pink":
-                ll.setBackgroundColor(Color.parseColor("#FFC0CB")); // Hex code for pink
+                ll.setBackgroundColor(Color.parseColor("#FFC0CB")); // קוד Hex עבור ורוד
                 break;
             case "Yellow":
                 ll.setBackgroundColor(Color.YELLOW);
@@ -97,18 +89,9 @@ public class MainActivity extends AppCompatActivity {
             case "White":
                 ll.setBackgroundColor(Color.WHITE);
                 break;
-
             default:
-                // Handle unknown colors
-                ll.setBackgroundColor(Color.WHITE); // Default color
+                ll.setBackgroundColor(Color.WHITE); // ברירת מחדל - לבן
                 break;
         }
-
-
     }
-
-
-
-
-
 }

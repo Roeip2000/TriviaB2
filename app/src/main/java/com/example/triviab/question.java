@@ -1,10 +1,13 @@
+// קובץ: question.java
 package com.example.triviab;
 
-public class question
-{
-    private String question,a1,a2,a3,a4;
-    private int correct;
+public class question {
 
+    // משתנים לאחסון פרטי השאלה
+    private String question, a1, a2, a3, a4; // נוסח השאלה ו-4 תשובות אפשריות
+    private int correct; // מספר התשובה הנכונה (1-4)
+
+    // בנאי (Constructor) ליצירת אובייקט של שאלה
     public question(String question, String a1, String a2, String a3, String a4, int correct) {
         this.question = question;
         this.a1 = a1;
@@ -14,14 +17,17 @@ public class question
         this.correct = correct;
     }
 
+    // פונקציות להחזרת השאלה
     public String getQuestion() {
         return question;
     }
 
+    // פונקציה לעדכון השאלה
     public void setQuestion(String question) {
         this.question = question;
     }
 
+    // פונקציות להחזרת תשובות אפשריות
     public String getA1() {
         return a1;
     }
@@ -50,21 +56,14 @@ public class question
         return a4;
     }
 
-    public void setA4(String a4) {
-        this.a4 = a4;
-    }
 
+    // פונקציות להחזרת מספר התשובה הנכונה
     public int getCorrect() {
         return correct;
     }
 
+    // פונקציה לעדכון מספר התשובה הנכונה
     public void setCorrect(int correct) {
         this.correct = correct;
     }
-
-
-    public static class collection {
-    }
 }
-
-

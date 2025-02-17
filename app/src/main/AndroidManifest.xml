@@ -13,6 +13,12 @@
         android:theme="@style/Theme.TriviaB"
         tools:targetApi="31">
         <activity
+            android:name=".Collection2_NOTUSE"
+            android:exported="false" />
+        <activity
+            android:name=".Instruction_Activity"
+            android:exported="false" />
+        <activity
             android:name=".CoustomDialog"
             android:exported="false" />
         <activity
