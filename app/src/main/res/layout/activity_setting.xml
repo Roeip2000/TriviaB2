@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".SettingActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="בחר צבע"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:paddingBottom="10dp"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textSize="24sp"
+        android:layout_margin="10dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:popupBackground="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/btnChooseColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="בחירה"
+        android:textSize="40sp"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
