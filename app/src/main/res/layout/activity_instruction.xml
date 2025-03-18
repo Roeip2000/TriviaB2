@@ -63,6 +63,25 @@
             android:textSize="18sp"
             android:padding="10dp"/>
 
+        <Button
+            android:id="@+id/btnSpeak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Read Instructions"
+            android:padding="10dp"
+            android:layout_marginTop="20dp" />
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- כפתור חזור -->
         <Button
             android:id="@+id/btnBack"

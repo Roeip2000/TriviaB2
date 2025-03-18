@@ -2,24 +2,33 @@
 package com.example.triviab;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView tvQuestion, tvPoints, tvQuestionNumber, tvGameOver;
+    // רכיבי ממשק
+    private TextView tvQuestion, tvPoints, tvQuestionNumber, tvGameOver, tvHighScore;
     private Button btna1, btna2, btna3, btna4, btnHome;
-    private Collection Collection;
+    private Collection Collection;  // במקום Collection
+
     private question currentQuestion;
     private int Points = 0;
-    private LinearLayout ll;
+
+    // Firebase
+    private DatabaseReference databaseReference;
+    private int highScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +38,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         Collection = new Collection();
 
-        // אתחול ה-Layout של המסך
-        ll = findViewById(R.id.activity_game);
+        // קישור Firebase
+        databaseReference = FirebaseDatabase.getInstance().getReference("HighScore");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    highScore = snapshot.getValue(Integer.class);
+                    tvHighScore.setText("High Score: " + highScore);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {}
+        });
 
+        // קישור רכיבי הממשק מה-XML
         tvQuestion = findViewById(R.id.tvQuestion);
         tvPoints = findViewById(R.id.tvPoints);
         tvQuestionNumber = findViewById(R.id.tvQuestionNumber);
         tvGameOver = findViewById(R.id.tvGameOver);
+        tvHighScore = findViewById(R.id.tvHighScore);
 
         btna1 = findViewById(R.id.btna1);
         btna2 = findViewById(R.id.btna2);
@@ -51,11 +73,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         Collection.intQuestion();
         nextQuestion();
+    }
 
-        // קבלת הצבע מה-Intent ושינוי הרקע
-        String color = getIntent().getStringExtra("background_color");
-        if (color != null) {
-            SetBeackgroundColor(color);
+    private void endGame() {
+        tvGameOver.setText("Game Over! Final Score: " + Points);
+        tvGameOver.setVisibility(View.VISIBLE);
+
+        if (Points > highScore) {
+            databaseReference.setValue(Points);
+            tvHighScore.setText("High Score: " + Points);
         }
     }
 
@@ -67,7 +93,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             btna2.setText(currentQuestion.getA2());
             btna3.setText(currentQuestion.getA3());
             btna4.setText(currentQuestion.getA4());
+        } else {
+            endGame();
         }
+    }
+
+    public void reset() {
+        Points = 0;
+        tvPoints.setText("Points: " + Points);
+        tvGameOver.setVisibility(View.INVISIBLE);
+        Collection.intQuestion();
+        nextQuestion();
     }
 
     @Override
@@ -83,7 +119,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             tvQuestionNumber.setText("Question number: " + (Collection.getIndex() + 1));
             nextQuestion();
         } else {
-            tvGameOver.setText("Game Over! Final Score: " + Points);
+            endGame();
             Custom_dialog customDialog = new Custom_dialog(this);
             customDialog.show();
         }
@@ -92,39 +128,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(GameActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-        }
-    }
-
-    public void reset() {
-        this.Points = 0;
-        Collection.intQuestion();
-        tvPoints.setText("Points: " + 0);
-        tvQuestionNumber.setText("Question number: " + 1);
-        tvGameOver.setVisibility(View.INVISIBLE);
-        this.nextQuestion();
-    }
-
-    // פונקציה לשינוי צבע הרקע
-    private void SetBeackgroundColor(String color) {
-        switch (color) {
-            case "Red":
-                ll.setBackgroundColor(Color.RED);
-                break;
-            case "Blue":
-                ll.setBackgroundColor(Color.BLUE);
-                break;
-            case "Pink":
-                ll.setBackgroundColor(Color.parseColor("#FFC0CB"));
-                break;
-            case "Yellow":
-                ll.setBackgroundColor(Color.YELLOW);
-                break;
-            case "White":
-                ll.setBackgroundColor(Color.WHITE);
-                break;
-            default:
-                ll.setBackgroundColor(Color.WHITE);
-                break;
         }
     }
 }
